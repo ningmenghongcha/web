@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登陆页面</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="styles/index.css"> 
+</head>
+<body>
+	<div id="app" class="login-background" style="height:730px;">
+        <form method="post">
+        <h1 class="text-black-50" align="center">用户登陆</h1><br>
+        <div class="form-group" align="center">
+        <b class="text-black-50">用户名:</b><input type="text" name="uname" v-model="uname" class="form-control" style="width:200px;height:30px;display:inline;">      
+        <b class="text-black-50">密码:</b><input type="password" name="upassword" v-model="psw" class="form-control" style="width:200px;height:30px;display:inline;">
+        <div><br>    
+        <input type="button" value="登录" @click="check()" class="btn">
+        <input type="reset" value="重置" class="btn">
+        </form>
+        </div>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script type="text/javascript">
+	var vm = new Vue({
+			el:'#app',
+			data:{
+				uname:'',
+				psw:'',
+			},
+			methods:{
+				check:function(){
+					if(this.uname=='柠檬红茶'&&this.psw=='19970916')
+						{
+							alert('Welcome');
+							window.location.href='home.html';
+						}
+					else alert('Error');
+					}
+				}
+		})
+	</script>
+</body>
+</html>

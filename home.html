@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div id='uuu'>
+	<div class="first">
+    	<div id="list_1"><table is = "ab" width="90%" border="0" cellspacing="0" cellpadding="0" align="center" @showlist="slist"></table>
+	</div>
+    </div>
+    <div class="second">
+    	<div class="page-top">
+    <div class="page-content">
+        <h2 align="center">任务计划列表</h2>
+    </div>
+</div>
+<div class="main">
+    <h3 class="big-title">添加待办事项</h3>
+    <input placeholder="输入内容+回车即可添加任务"
+            class="task-input"
+            type="text"
+            v-model="todo"
+            v-on:keyup.enter="addTodo"
+     />
+    <ul class="task-count"  v-show="currentlist.storelist.length">
+        <li>{{ noCheckeLength }}个任务未完成</li><!--渲染数据-->
+        <li class="action">
+            <a :class="{active:visibility==='all'}" @click="visibility='all'">所有任务</a>
+            <a :class="{active:visibility==='unfinished'}" @click="visibility='unfinished'">未完成的任务</a>
+            <a :class="{active:visibility==='finished'}" @click="visibility='finished'">完成的任务</a>
+        </li>
+    </ul>
+    <h3 class="big-title">任务列表</h3>
+    <div class="tasks">
+        <span class="no-task-tip" v-show="!currentlist.storelist.length">还没有添加任何任务</span>
+        <ul class="todo-list">
+            <li class="todo" :class="{completed:item.isChecked,editing:item===edtorTodos}" v-for="item in filteredList">
+                <div class="view">
+                    <input class="toggle" type="checkbox" v-model="item.isChecked" />
+                    <label @dblclick="edtorTodo(item)">{{item.title}}</label>
+                    <button class="destroy" @click="deleteTodo(item)"></button>
+                </div>
+                <input v-focus="edtorTodos===item" class="edit" type="text" v-model="item.title" @blur="edtorTodoed(item)" @keyup.enter="edtorTodoed(item)" @keyup.esc="cancelTodo(item)" />
+            </li>
+        </ul>
+    </div>
+    <div class="sort">
+    	<button class="btn btn-primary" @click="sort1()">Sort</button>
+    </div>
+</div>
+    </div>			
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div>
+                    <form> 
+                        <input type="text" class="form-control" placeholder="请输入要查找的任务" style="width:300px; text-align:center" v-model="searchValue"> 
+                            <div v-for="item in currentlist.storelist" v-if="item.title.indexOf(searchValue)!==-1 && searchValue!=''">
+                                {{ item.title }}
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+   </div>
+    <template id='abcd'>
+		<table>
+			<tr>
+				<td>
+					<img src="images/pigs.gif" height="10%" style="border-radius:10px;vertical-align:middle; margin-top:5px" alt="avatar">
+					<b>柠檬红茶</span>
+                    <button @click="logout()" class="btn btn-danger" style="margin-left:19px;">log out</button>
+                    </b>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<hr>
+				</td>
+			</tr>
+			<tr>
+				<td height="60">
+					<a href="http://www.baidu.com"><img src="images/apple.png" width="30" height="30">&nbsp;My Day</a>
+				</td>
+			</tr>
+			<tr>
+				<td height="60">
+					<a href="http://www.baidu.com"><img src="images/star.png" width="30" height="30">&nbsp;To-Do</a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<hr>
+				</td>
+			</tr>
+			<tr v-for="(list,index) in lists">
+				<td height="60">
+					<a @click="$emit('showlist',list)">
+						{{ list.listname }}
+					</a>
+				</td>
+				<td>
+					<button title="删除此清单" @click="deleteList(index)" class="btn">Delete</button>
+				</td>
+			</tr>
+			<tr>
+				<td height="60">
+					<input v-model="newList.listname" class="form-control">
+				</td>
+				<td>
+					<button @click="createList()" class="btn btn-success">Create</button>
+				</td>
+			</tr>
+		</table>
+	</template>
+    <script src="vue.js"></script>
+	<script src="left.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
